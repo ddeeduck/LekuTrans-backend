@@ -1,0 +1,19 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# .NET
+bin/
+obj/
+
+# Node.js (если фронт на React/Vue/Angular)
+node_modules/
+dist/
+.env
+
+# Общее
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
