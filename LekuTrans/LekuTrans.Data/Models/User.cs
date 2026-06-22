@@ -1,6 +1,6 @@
+using LekuTrans.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using LekuTrans.Data.Enums;
 
 namespace LekuTrans.Data.Models;
 
@@ -20,8 +20,8 @@ public class User
     [Column("role")]
     public UserRole Role { get; set; } = UserRole.Client;
 
-    [Column("status")]
-    public string Status { get; set; } = "active";
+    [Column("is_active")]
+    public bool IsActive { get; set; } = true;
 
     [Column("full_name")]
     public string FullName { get; set; }

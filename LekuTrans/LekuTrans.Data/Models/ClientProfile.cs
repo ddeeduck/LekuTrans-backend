@@ -1,6 +1,6 @@
+using LekuTrans.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using LekuTrans.Data.Enums;
 
 namespace LekuTrans.Data.Models;
 
@@ -13,9 +13,6 @@ public class ClientProfile
 
     [Column("type")]
     public ClientType Type { get; set; }
-
-    [Column("is_active")]
-    public bool IsActive { get; set; } = true;
 
     [Column("created_at")]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
