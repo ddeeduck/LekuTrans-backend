@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using LekuTrans.Data.Enums;
 
 namespace LekuTrans.Data.Models;
 
@@ -32,7 +33,7 @@ public class Cargo
     public decimal HeightM { get; set; }
 
     [Column("cargo_type")]
-    public string CargoType { get; set; } = "обычный";
+    public CargoType CargoType { get; set; } = CargoType.Обычный;
 
     [Column("special_requirements")]
     public string SpecialRequirements { get; set; }
