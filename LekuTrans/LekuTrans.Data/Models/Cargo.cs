@@ -23,13 +23,13 @@ public class Cargo
     public decimal VolumeM3 { get; set; }
 
     [Column("length_m", TypeName = "numeric(8,2)")]
-    public decimal LengthCm { get; set; }
+    public decimal LengthM { get; set; }
 
     [Column("width_m", TypeName = "numeric(8,2)")]
-    public decimal WidthCm { get; set; }
+    public decimal WidthM { get; set; }
 
     [Column("height_m", TypeName = "numeric(8,2)")]
-    public decimal HeightCm { get; set; }
+    public decimal HeightM { get; set; }
 
     [Column("cargo_type")]
     public string CargoType { get; set; } = "обычный";
