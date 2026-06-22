@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LekuTrans_backend.Models;
+namespace LekuTrans.Data.Models;
 
 [Table("order_status_history")]
 public class OrderStatusHistory

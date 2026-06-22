@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LekuTrans_backend.Models;
+namespace LekuTrans.Data.Models;
 
 [Table("client_profiles")]
 public class ClientProfile
