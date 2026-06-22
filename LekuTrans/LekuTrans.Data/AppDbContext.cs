@@ -114,5 +114,37 @@ public class AppDbContext : DbContext
             .HasOne(f => f.User)
             .WithMany(u => u.Feedbacks)
             .HasForeignKey(f => f.UserId);
+
+        modelBuilder.Entity<User>()
+            .Property(u => u.Role)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<ClientProfile>()
+            .Property(cp => cp.Type)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<Cargo>()
+            .Property(c => c.CargoType)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<Order>()
+            .Property(o => o.Status)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<Order>()
+            .Property(o => o.PaymentStatus)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<LoadingInfo>()
+            .Property(li => li.LoadingType)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<Vehicle>()
+            .Property(v => v.Status)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<Driver>()
+            .Property(d => d.Status)
+            .HasConversion<string>();
     }
 }
