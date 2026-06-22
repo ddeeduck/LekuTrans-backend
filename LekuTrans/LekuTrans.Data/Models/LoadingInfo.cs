@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using LekuTrans.Data.Enums;
 
 namespace LekuTrans.Data.Models;
 
@@ -26,7 +27,7 @@ public class LoadingInfo
     public TimeSpan? UnloadingTime { get; set; }
 
     [Column("loading_type")]
-    public string LoadingType { get; set; } = "задн€€";
+    public LoadingType LoadingType { get; set; } = LoadingType.«адн€€;
 
     [ForeignKey("OrderId")]
     public Order Order { get; set; }
