@@ -7,6 +7,7 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
+        Database.EnsureCreated();
     }
 
     public DbSet<User> Users { get; set; }
@@ -44,6 +45,26 @@ public class AppDbContext : DbContext
             .WithOne(cp => cp.IndividualClient)
             .HasForeignKey<IndividualClient>(ic => ic.UserId);
 
+        modelBuilder.Entity<ClientCargo>()
+            .HasOne(cc => cc.Client)
+            .WithMany(cp => cp.ClientCargos)
+            .HasForeignKey(cc => cc.ClientId);
+
+        modelBuilder.Entity<ClientCargo>()
+            .HasOne(cc => cc.Cargo)
+            .WithMany(c => c.ClientCargos)
+            .HasForeignKey(cc => cc.CargoId);
+
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.Client)
+            .WithMany(cp => cp.Orders)
+            .HasForeignKey(o => o.ClientId);
+
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.ClientCargo)
+            .WithMany(cc => cc.Orders)
+            .HasForeignKey(o => o.ClientCargoId);
+
         modelBuilder.Entity<Order>()
             .HasOne(o => o.LoadingInfo)
             .WithOne(li => li.Order)
@@ -53,5 +74,45 @@ public class AppDbContext : DbContext
             .HasOne(o => o.Recipient)
             .WithOne(r => r.Order)
             .HasForeignKey<Recipient>(r => r.OrderId);
+
+        modelBuilder.Entity<OrderStatusHistory>()
+            .HasOne(h => h.Order)
+            .WithMany(o => o.StatusHistory)
+            .HasForeignKey(h => h.OrderId);
+
+        modelBuilder.Entity<OrderStatusHistory>()
+            .HasOne(h => h.ChangedByUser)
+            .WithMany(u => u.StatusHistoryChanges)
+            .HasForeignKey(h => h.ChangedBy);
+
+        modelBuilder.Entity<Assignment>()
+            .HasOne(a => a.Order)
+            .WithMany(o => o.Assignments)
+            .HasForeignKey(a => a.OrderId);
+
+        modelBuilder.Entity<Assignment>()
+            .HasOne(a => a.Vehicle)
+            .WithMany(v => v.Assignments)
+            .HasForeignKey(a => a.VehicleId);
+
+        modelBuilder.Entity<Assignment>()
+            .HasOne(a => a.Driver)
+            .WithMany(d => d.Assignments)
+            .HasForeignKey(a => a.DriverId);
+
+        modelBuilder.Entity<Review>()
+            .HasOne(r => r.Order)
+            .WithMany(o => o.Reviews)
+            .HasForeignKey(r => r.OrderId);
+
+        modelBuilder.Entity<Review>()
+            .HasOne(r => r.Client)
+            .WithMany(cp => cp.Reviews)
+            .HasForeignKey(r => r.ClientId);
+
+        modelBuilder.Entity<Feedback>()
+            .HasOne(f => f.User)
+            .WithMany(u => u.Feedbacks)
+            .HasForeignKey(f => f.UserId);
     }
 }
