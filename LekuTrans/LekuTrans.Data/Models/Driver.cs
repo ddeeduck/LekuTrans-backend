@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using LekuTrans.Data.Enums;
 
 namespace LekuTrans.Data.Models;
 
@@ -23,7 +24,7 @@ public class Driver
     public string Phone { get; set; }
 
     [Column("status")]
-    public string Status { get; set; } = "доступен";
+    public DriverStatus Status { get; set; } = DriverStatus.Доступен;
 
     public ICollection<Assignment> Assignments { get; set; }
 }
