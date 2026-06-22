@@ -21,7 +21,7 @@ public class Order
     public OrderStatus Status { get; set; } = OrderStatus.НоваяЗаявка;
 
     [Column("payment_status")]
-    public string PaymentStatus { get; set; } = "не оплачен";
+    public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.НеОплачен;
 
     [Column("pickup_address")]
     public string PickupAddress { get; set; }
