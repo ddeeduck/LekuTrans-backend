@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using LekuTrans.Data.Enums;
 
 namespace LekuTrans.Data.Models;
 
@@ -17,7 +18,7 @@ public class Order
     public long ClientCargoId { get; set; }
 
     [Column("status")]
-    public string Status { get; set; } = "Новая заявка";
+    public OrderStatus Status { get; set; } = OrderStatus.НоваяЗаявка;
 
     [Column("payment_status")]
     public string PaymentStatus { get; set; } = "не оплачен";
