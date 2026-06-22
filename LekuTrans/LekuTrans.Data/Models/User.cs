@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using LekuTrans.Data.Enums;
 
 namespace LekuTrans.Data.Models;
 
@@ -17,7 +18,7 @@ public class User
     public string PasswordHash { get; set; }
 
     [Column("role")]
-    public string Role { get; set; } = "client";
+    public UserRole Role { get; set; } = UserRole.Client;
 
     [Column("status")]
     public string Status { get; set; } = "active";
