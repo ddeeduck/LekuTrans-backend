@@ -8,6 +8,7 @@ namespace LekuTrans.Data.Models;
 public class Driver
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("id")]
     public long Id { get; set; }
 

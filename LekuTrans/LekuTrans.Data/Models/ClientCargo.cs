@@ -7,6 +7,7 @@ namespace LekuTrans.Data.Models;
 public class ClientCargo
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("id")]
     public long Id { get; set; }
 
