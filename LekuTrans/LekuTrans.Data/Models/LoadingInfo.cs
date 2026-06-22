@@ -1,6 +1,6 @@
+using LekuTrans.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using LekuTrans.Data.Enums;
 
 namespace LekuTrans.Data.Models;
 
@@ -14,17 +14,11 @@ public class LoadingInfo
     [Column("order_id")]
     public long OrderId { get; set; }
 
-    [Column("loading_date")]
-    public DateTime? LoadingDate { get; set; }
+    [Column("loading_dt")]
+    public DateTime? LoadingDt { get; set; }
 
-    [Column("loading_time")]
-    public TimeSpan? LoadingTime { get; set; }
-
-    [Column("unloading_date")]
-    public DateTime? UnloadingDate { get; set; }
-
-    [Column("unloading_time")]
-    public TimeSpan? UnloadingTime { get; set; }
+    [Column("unloading_dt")]
+    public DateTime? UnloadingDt { get; set; }
 
     [Column("loading_type")]
     public LoadingType LoadingType { get; set; } = LoadingType.Задняя;
