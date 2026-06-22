@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using LekuTrans.Data.Enums;
 
 namespace LekuTrans.Data.Models;
 
@@ -23,7 +24,7 @@ public class Vehicle
     public decimal CapacityM3 { get; set; }
 
     [Column("status")]
-    public string Status { get; set; } = "свободен";
+    public VehicleStatus Status { get; set; } = VehicleStatus.Свободен;
 
     public ICollection<Assignment> Assignments { get; set; }
 }
