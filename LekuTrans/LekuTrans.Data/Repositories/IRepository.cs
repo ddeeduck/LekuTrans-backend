@@ -8,12 +8,11 @@ namespace LekuTrans.Data.Repositories
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        T GetById(long id);
-        void Create(T item);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(long id);
+        Task CreateAsync(T item);
         void Update(T item);
         void Delete(long id);
-        void Save();
+        Task SaveAsync();
     }
-
 }

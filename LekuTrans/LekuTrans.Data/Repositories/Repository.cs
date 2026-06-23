@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LekuTrans.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,19 +17,19 @@ namespace LekuTrans.Data.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync();
         }
 
-        public T GetById(long id)
+        public async Task<T> GetByIdAsync(long id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public void Create(T item)
+        public async Task CreateAsync(T item)
         {
-            _dbSet.Add(item);
+            await _dbSet.AddAsync(item);
         }
 
         public void Update(T item)
@@ -38,14 +39,14 @@ namespace LekuTrans.Data.Repositories
 
         public void Delete(long id)
         {
-            T entity = _dbSet.Find(id);
+            var entity = _dbSet.Find(id);
             if (entity != null)
                 _dbSet.Remove(entity);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
