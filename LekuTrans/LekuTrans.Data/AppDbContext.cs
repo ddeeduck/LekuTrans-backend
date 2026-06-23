@@ -58,22 +58,26 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Order>()
             .HasOne(o => o.Client)
             .WithMany(cp => cp.Orders)
-            .HasForeignKey(o => o.ClientId);
+            .HasForeignKey(o => o.ClientId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Order>()
             .HasOne(o => o.ClientCargo)
             .WithMany(cc => cc.Orders)
-            .HasForeignKey(o => o.ClientCargoId);
+            .HasForeignKey(o => o.ClientCargoId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Order>()
             .HasOne(o => o.LoadingInfo)
             .WithOne(li => li.Order)
-            .HasForeignKey<LoadingInfo>(li => li.OrderId);
+            .HasForeignKey<LoadingInfo>(li => li.OrderId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Order>()
             .HasOne(o => o.Recipient)
             .WithOne(r => r.Order)
-            .HasForeignKey<Recipient>(r => r.OrderId);
+            .HasForeignKey<Recipient>(r => r.OrderId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<OrderStatusHistory>()
             .HasOne(h => h.Order)
