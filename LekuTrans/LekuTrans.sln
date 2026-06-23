@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37328.6 d17.14
+VisualStudioVersion = 17.14.37328.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LekuTrans.WebApi", "LekuTrans.WebApi\LekuTrans.WebApi.csproj", "{0C4AF55E-825A-4EFD-943E-5EB361FBA432}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LekuTrans.Data", "LekuTrans.Data\LekuTrans.Data.csproj", "{5214B1E3-7372-4490-8195-82EAE39388E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LekuTrans.Services", "LekuTrans.Services\LekuTrans.Services.csproj", "{AD95FB90-705D-4BC8-A119-DA607CAFDE06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5214B1E3-7372-4490-8195-82EAE39388E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5214B1E3-7372-4490-8195-82EAE39388E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5214B1E3-7372-4490-8195-82EAE39388E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD95FB90-705D-4BC8-A119-DA607CAFDE06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD95FB90-705D-4BC8-A119-DA607CAFDE06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD95FB90-705D-4BC8-A119-DA607CAFDE06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD95FB90-705D-4BC8-A119-DA607CAFDE06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
