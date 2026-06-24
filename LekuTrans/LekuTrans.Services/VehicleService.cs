@@ -35,14 +35,14 @@ namespace LekuTrans.Services
             return vehicle;
         }
 
-         public async Task<IEnumerable<Vehicle>> GetAll()
+         public async Task<IEnumerable<Vehicle>> GetAllVehicles()
         {
             IEnumerable<Vehicle> vehicles = await _repository.GetAllAsync();
 
             return vehicles;
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAvailable()
+        public async Task<IEnumerable<Vehicle>> GetAvailableVehicles()
         {
             IEnumerable<Vehicle> vehicles = await _repository.GetAllAsync();
 
@@ -60,7 +60,7 @@ namespace LekuTrans.Services
 
         }
 
-        public async Task<Vehicle> UpdateStatus(long id, VehicleStatus newStatus)
+        public async Task<Vehicle> UpdateStatusVehicle(long id, VehicleStatus newStatus)
         {
             Vehicle vehicle = await _repository.GetByIdAsync(id);
 
@@ -78,7 +78,7 @@ namespace LekuTrans.Services
             return vehicle;
         }
 
-        public async Task Delete(long id)
+        public async Task DeleteVehicle(long id)
         {
             Vehicle vehicle = await _repository.GetByIdAsync(id);
 

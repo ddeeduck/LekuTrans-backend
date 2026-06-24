@@ -19,7 +19,7 @@ namespace LekuTrans.Services
             _repository = repository;
         }
 
-        public async Task<User> Register(string email, string passwordHash, UserRole role, string fullName)
+        public async Task<User> RegisterUser(string email, string passwordHash, UserRole role, string fullName)
         {
             User user = new User()
             {
@@ -36,7 +36,7 @@ namespace LekuTrans.Services
             return user;
         }
 
-        public async Task<User> Login(string email, string passwordHash)
+        public async Task<User> LoginUser(string email, string passwordHash)
         {
             IEnumerable<User> users = await _repository.GetAllAsync();
             User user = users.FirstOrDefault(u => u.Email == email); 
@@ -49,7 +49,7 @@ namespace LekuTrans.Services
             return user;
         }
 
-        public async Task<User> GetProfile(long id)
+        public async Task<User> GetProfileUser(long id)
         {
             User user = await _repository.GetByIdAsync(id);
 
