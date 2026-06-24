@@ -9,7 +9,7 @@ using LekuTrans.Data.Repositories;
 
 namespace LekuTrans.Services
 {
-    internal class VehicleService
+    public class VehicleService
     {
         private readonly IRepository<Vehicle> _repository;
 
