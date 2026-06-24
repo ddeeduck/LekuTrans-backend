@@ -11,21 +11,11 @@ namespace LekuTrans.Services
 {
     public class OrderService
     {
-        private readonly IRepository<Order> _orderRepository;
-        private readonly IRepository<Vehicle> _vehicleRepository;
-        private readonly IRepository<Driver> _driverRepository;
-        private readonly IRepository<Assignment> _assignmentRepository;
+        private readonly IRepository<Order> _repository;
 
-        public OrderService(
-            IRepository<Order> orderRepository,
-            IRepository<Vehicle> vehicleRepository,
-            IRepository<Driver> driverRepository,
-            IRepository<Assignment> assignmentRepository)
+        public OrderService(IRepository<Order> repository)
         {
-            _orderRepository = orderRepository;
-            _vehicleRepository = vehicleRepository;
-            _driverRepository = driverRepository;
-            _assignmentRepository = assignmentRepository;
+            _repository = repository;
         }
 
         public async Task<Order> CreateOrder(
@@ -70,22 +60,22 @@ namespace LekuTrans.Services
                 }
             };
 
-            await _orderRepository.CreateAsync(order);
-            await _orderRepository.SaveAsync();
+            await _repository.CreateAsync(order);
+            await _repository.SaveAsync();
 
             return order;
         }
 
         public async Task<IEnumerable<Order>> GetAllOrders()
         {
-            IEnumerable<Order> orders = await _orderRepository.GetAllAsync();
+            IEnumerable<Order> orders = await _repository.GetAllAsync();
 
             return orders;
         }
 
         public async Task<IEnumerable<Order>> GetOrdersByClient(long clientId)
         {
-            IEnumerable<Order> orders = await _orderRepository.GetAllAsync();
+            IEnumerable<Order> orders = await _repository.GetAllAsync();
 
             List<Order> resultList = new List<Order>();
 
@@ -103,7 +93,7 @@ namespace LekuTrans.Services
 
         public async Task<Order> UpdateStatusOrder(long id, OrderStatus newStatus)
         {
-            Order order = await _orderRepository.GetByIdAsync(id);
+            Order order = await _repository.GetByIdAsync(id);
 
             if (order == null)
             {
@@ -112,63 +102,11 @@ namespace LekuTrans.Services
 
             order.Status = newStatus;
 
-            _orderRepository.Update(order);
+            _repository.Update(order);
 
-            await _orderRepository.SaveAsync();
+            await _repository.SaveAsync();
 
             return order;
-        }
-
-        public async Task AssignVehicle(long orderId, long vehicleId, long driverId)
-        {
-            var order = await _orderRepository.GetByIdAsync(orderId);
-            var vehicle = await _vehicleRepository.GetByIdAsync(vehicleId);
-            var driver = await _driverRepository.GetByIdAsync(driverId);
-
-            if (order == null)
-            {
-                throw new Exception($"Заказ с ID {orderId} не найден.");
-            }
-
-            if (vehicle == null)
-            {
-                throw new Exception($"Машина с ID {vehicleId} не найдена.");
-            }
-
-            if (driver == null)
-            {
-                throw new Exception($"Водитель с ID {driverId} не найден.");
-            }
-
-            if (vehicle.Status != VehicleStatus.Свободен)
-            {
-                throw new Exception("Машина не свободна.");
-            }
-
-            if (driver.Status != DriverStatus.Доступен)
-            {
-                throw new Exception("Водитель не доступен.");
-            }
-                
-
-            var assignment = new Assignment
-            {
-                OrderId = orderId,
-                VehicleId = vehicleId,
-                DriverId = driverId,
-                AssignedAt = DateTime.UtcNow
-            };
-
-            vehicle.Status = VehicleStatus.ВРейсе;
-            driver.Status = DriverStatus.Занят;
-            order.Status = OrderStatus.НазначенТранспорт;
-
-            await _assignmentRepository.CreateAsync(assignment);
-            _vehicleRepository.Update(vehicle);
-            _driverRepository.Update(driver);
-            _orderRepository.Update(order);
-
-            await _orderRepository.SaveAsync();
         }
     }
 }
