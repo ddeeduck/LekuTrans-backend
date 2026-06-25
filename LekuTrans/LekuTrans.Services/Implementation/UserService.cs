@@ -3,6 +3,7 @@ using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LekuTrans.Services.Services;
 
@@ -33,13 +34,7 @@ public class UserService : IUserService
 
     public async Task<User?> LoginAsync(string email, string passwordHash)
     {
-        var users = await _repository.GetAllAsync();
-        var user = users.FirstOrDefault(u => u.Email == email);
-
-        if (user == null || user.PasswordHash != passwordHash)
-            return null;
-
-        return user;
+        return await _repository.GetQuery().FirstOrDefaultAsync(u => u.Email == email && u.PasswordHash == passwordHash);
     }
 
     public async Task<User?> GetProfileAsync(long id)

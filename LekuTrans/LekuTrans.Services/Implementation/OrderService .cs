@@ -3,6 +3,7 @@ using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LekuTrans.Services.Services;
 
@@ -51,7 +52,7 @@ public class OrderService : IOrderService
 
     public async Task<IEnumerable<Order>> GetAllAsync()
     {
-        return await _repository.GetAllAsync();
+        return await _repository.GetQuery().ToListAsync();
     }
 
     public async Task<Order?> GetByIdAsync(long id)
@@ -61,8 +62,7 @@ public class OrderService : IOrderService
 
     public async Task<IEnumerable<Order>> GetByClientAsync(long clientId)
     {
-        var orders = await _repository.GetAllAsync();
-        return orders.Where(o => o.ClientId == clientId).ToList();
+        return await _repository.GetQuery().Where(o => o.ClientId == clientId).ToListAsync();
     }
 
     public async Task<Order?> UpdateStatusAsync(long id, OrderStatus newStatus)

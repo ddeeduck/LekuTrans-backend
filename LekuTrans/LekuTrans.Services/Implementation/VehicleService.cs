@@ -3,6 +3,7 @@ using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LekuTrans.Services.Services;
 
@@ -34,7 +35,7 @@ public class VehicleService : IVehicleService
 
     public async Task<IEnumerable<Vehicle>> GetAllAsync()
     {
-        return await _repository.GetAllAsync();
+        return await _repository.GetQuery().ToListAsync();
     }
 
     public async Task<Vehicle?> GetByIdAsync(long id)
@@ -44,8 +45,7 @@ public class VehicleService : IVehicleService
 
     public async Task<IEnumerable<Vehicle>> GetAvailableAsync()
     {
-        var vehicles = await _repository.GetAllAsync();
-        return vehicles.Where(v => v.Status == VehicleStatus.Свободен).ToList();
+        return await _repository.GetQuery().Where(v => v.Status == VehicleStatus.Свободен).ToListAsync();
     }
 
     public async Task<Vehicle?> UpdateStatusAsync(long id, VehicleStatus newStatus)

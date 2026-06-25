@@ -1,6 +1,7 @@
 ﻿using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LekuTrans.Services.Services;
 
@@ -31,7 +32,6 @@ public class ReviewService : IReviewService
 
     public async Task<IEnumerable<Review>> GetByOrderAsync(long orderId)
     {
-        var reviews = await _repository.GetAllAsync();
-        return reviews.Where(r => r.OrderId == orderId).ToList();
+        return await _repository.GetQuery().Where(r => r.OrderId == orderId).ToListAsync();
     }
 }

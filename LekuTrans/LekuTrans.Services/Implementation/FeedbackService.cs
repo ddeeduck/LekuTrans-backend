@@ -1,6 +1,7 @@
 ﻿using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LekuTrans.Services.Services;
 
@@ -32,6 +33,6 @@ public class FeedbackService : IFeedbackService
 
     public async Task<IEnumerable<Feedback>> GetAllAsync()
     {
-        return await _repository.GetAllAsync();
+        return await _repository.GetQuery().ToListAsync();
     }
 }

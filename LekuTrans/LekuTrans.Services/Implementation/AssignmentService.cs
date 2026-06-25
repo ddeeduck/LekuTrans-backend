@@ -2,6 +2,7 @@
 using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LekuTrans.Services.Services;
 
@@ -65,26 +66,22 @@ public class AssignmentService : IAssignmentService
 
     public async Task CompleteAssignmentAsync(long assignmentId)
     {
-        var assignment = await _assignmentRepo.GetByIdAsync(assignmentId);
+        var assignment = await _assignmentRepo.GetQuery()
+            .Include(a => a.Order)
+            .Include(a => a.Vehicle)
+            .Include(a => a.Driver)
+            .FirstOrDefaultAsync(a => a.Id == assignmentId);
 
         if (assignment == null)
             throw new ArgumentNullException(nameof(assignment), $"Назначение с ID {assignmentId} не найдено.");
 
         assignment.ActualEnd = DateTime.UtcNow;
 
-        var order = await _orderRepo.GetByIdAsync(assignment.OrderId);
-        var vehicle = await _vehicleRepo.GetByIdAsync(assignment.VehicleId);
-        var driver = await _driverRepo.GetByIdAsync(assignment.DriverId);
-
-        if (order != null) order.Status = OrderStatus.Доставлен;
-        if (vehicle != null) vehicle.Status = VehicleStatus.Свободен;
-        if (driver != null) driver.Status = DriverStatus.Доступен;
+        if (assignment.Order != null) assignment.Order.Status = OrderStatus.Доставлен;
+        if (assignment.Vehicle != null) assignment.Vehicle.Status = VehicleStatus.Свободен;
+        if (assignment.Driver != null) assignment.Driver.Status = DriverStatus.Доступен;
 
         _assignmentRepo.Update(assignment);
-        if (order != null) _orderRepo.Update(order);
-        if (vehicle != null) _vehicleRepo.Update(vehicle);
-        if (driver != null) _driverRepo.Update(driver);
-
         await _assignmentRepo.SaveAsync();
     }
 }

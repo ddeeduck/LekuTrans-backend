@@ -3,6 +3,7 @@ using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LekuTrans.Services.Services;
 
@@ -34,13 +35,12 @@ public class DriverService : IDriverService
 
     public async Task<IEnumerable<Driver>> GetAllAsync()
     {
-        return await _repository.GetAllAsync();
+        return await _repository.GetQuery().ToListAsync();
     }
 
     public async Task<IEnumerable<Driver>> GetAvailableAsync()
     {
-        var drivers = await _repository.GetAllAsync();
-        return drivers.Where(d => d.Status == DriverStatus.Доступен).ToList();
+        return await _repository.GetQuery().Where(d => d.Status == DriverStatus.Доступен).ToListAsync();
     }
 
     public async Task<Driver?> UpdateStatusAsync(long id, DriverStatus newStatus)

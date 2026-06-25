@@ -17,9 +17,9 @@ namespace LekuTrans.Data.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public IQueryable<T> GetQuery()
         {
-            return await _dbSet.ToListAsync();
+            return _dbSet.AsQueryable();
         }
 
         public async Task<T> GetByIdAsync(long id)
@@ -48,5 +48,6 @@ namespace LekuTrans.Data.Repositories
         {
             await _context.SaveChangesAsync();
         }
+
     }
 }
