@@ -2,6 +2,7 @@
 using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
+using LekuTrans.Services.Models;
 
 namespace LekuTrans.Services.Services;
 
@@ -14,15 +15,15 @@ public class VehicleService : IVehicleService
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task<Vehicle> AddVehicleAsync(string licensePlate, string model, decimal capacityKg, decimal capacityM3, VehicleStatus vehicleStatus)
+    public async Task<Vehicle> AddVehicleAsync(VehicleDto dto)
     {
         var vehicle = new Vehicle
         {
-            LicensePlate = licensePlate,
-            Model = model,
-            CapacityKg = capacityKg,
-            CapacityM3 = capacityM3,
-            Status = vehicleStatus
+            LicensePlate = dto.LicensePlate,
+            Model = dto.Model,
+            CapacityKg = dto.CapacityKg,
+            CapacityM3 = dto.CapacityM3,
+            Status = dto.Status
         };
 
         await _repository.CreateAsync(vehicle);

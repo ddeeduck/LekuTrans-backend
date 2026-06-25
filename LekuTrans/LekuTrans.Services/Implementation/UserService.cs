@@ -2,6 +2,7 @@
 using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
+using LekuTrans.Services.Models;
 
 namespace LekuTrans.Services.Services;
 
@@ -14,14 +15,14 @@ public class UserService : IUserService
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task<User> RegisterAsync(string email, string passwordHash, UserRole role, string fullName)
+    public async Task<User> RegisterAsync(UserDto dto)
     {
         var user = new User
         {
-            Email = email,
-            PasswordHash = passwordHash,
-            Role = role,
-            FullName = fullName
+            Email = dto.Email,
+            PasswordHash = dto.PasswordHash,
+            Role = dto.Role,
+            FullName = dto.FullName
         };
 
         await _repository.CreateAsync(user);

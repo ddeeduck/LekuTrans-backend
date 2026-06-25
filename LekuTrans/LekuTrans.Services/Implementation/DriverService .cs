@@ -2,6 +2,7 @@
 using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
+using LekuTrans.Services.Models;
 
 namespace LekuTrans.Services.Services;
 
@@ -14,15 +15,15 @@ public class DriverService : IDriverService
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task<Driver> AddDriverAsync(string fullName, string licenseNumber, DateTime licenseSince, string phone, DriverStatus status)
+    public async Task<Driver> AddDriverAsync(DriverDto dto)
     {
         var driver = new Driver
         {
-            FullName = fullName,
-            LicenseNumber = licenseNumber,
-            LicenseSince = licenseSince,
-            Phone = phone,
-            Status = status
+            FullName = dto.FullName,
+            LicenseNumber = dto.LicenseNumber,
+            LicenseSince = dto.LicenseSince,
+            Phone = dto.Phone,
+            Status = dto.Status
         };
 
         await _repository.CreateAsync(driver);

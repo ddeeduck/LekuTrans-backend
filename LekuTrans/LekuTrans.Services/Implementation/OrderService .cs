@@ -2,6 +2,7 @@
 using LekuTrans.Data.Models;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
+using LekuTrans.Services.Models;
 
 namespace LekuTrans.Services.Services;
 
@@ -14,35 +15,31 @@ public class OrderService : IOrderService
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task<Order> CreateOrderAsync(
-        long clientId, long clientCargoId, string pickupAddress, string deliveryAddress,
-        DateTime? loadingDt, DateTime? unloadingDt, LoadingType loadingType,
-        string recipientCompany, string? recipientPhone, string? recipientInn,
-        string? trailerType, bool insurance, string? additionalConditions, string? notes)
+    public async Task<Order> CreateOrderAsync(OrderDto dto)
     {
         var order = new Order
         {
-            ClientId = clientId,
-            ClientCargoId = clientCargoId,
-            PickupAddress = pickupAddress,
-            DeliveryAddress = deliveryAddress,
+            ClientId = dto.ClientId,
+            ClientCargoId = dto.ClientCargoId,
+            PickupAddress = dto.PickupAddress,
+            DeliveryAddress = dto.DeliveryAddress,
             Status = OrderStatus.НоваяЗаявка,
             PaymentStatus = PaymentStatus.НеОплачен,
-            TrailerType = trailerType,
-            Insurance = insurance,
-            AdditionalConditions = additionalConditions,
-            Notes = notes,
+            TrailerType = dto.TrailerType,
+            Insurance = dto.Insurance,
+            AdditionalConditions = dto.AdditionalConditions,
+            Notes = dto.Notes,
             LoadingInfo = new LoadingInfo
             {
-                LoadingDt = loadingDt,
-                UnloadingDt = unloadingDt,
-                LoadingType = loadingType
+                LoadingDt = dto.LoadingDt,
+                UnloadingDt = dto.UnloadingDt,
+                LoadingType = dto.LoadingType
             },
             Recipient = new Recipient
             {
-                Company = recipientCompany,
-                Phone = recipientPhone,
-                Inn = recipientInn
+                Company = dto.RecipientCompany,
+                Phone = dto.RecipientPhone,
+                Inn = dto.RecipientInn
             }
         };
 
