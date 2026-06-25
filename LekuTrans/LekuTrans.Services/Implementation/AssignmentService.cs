@@ -66,7 +66,7 @@ public class AssignmentService : IAssignmentService
 
     public async Task CompleteAssignmentAsync(long assignmentId)
     {
-        var assignment = await _assignmentRepo.GetQuery()
+        var assignment = await _assignmentRepo.GetQueryAsync()
             .Include(a => a.Order)
             .Include(a => a.Vehicle)
             .Include(a => a.Driver)

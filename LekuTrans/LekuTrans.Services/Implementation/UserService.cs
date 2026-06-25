@@ -34,7 +34,7 @@ public class UserService : IUserService
 
     public async Task<User?> LoginAsync(string email, string passwordHash)
     {
-        return await _repository.GetQuery().FirstOrDefaultAsync(u => u.Email == email && u.PasswordHash == passwordHash);
+        return await _repository.GetQueryAsync().FirstOrDefaultAsync(u => u.Email == email && u.PasswordHash == passwordHash);
     }
 
     public async Task<User?> GetProfileAsync(long id)

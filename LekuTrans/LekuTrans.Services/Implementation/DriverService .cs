@@ -35,12 +35,12 @@ public class DriverService : IDriverService
 
     public async Task<IEnumerable<Driver>> GetAllAsync()
     {
-        return await _repository.GetQuery().ToListAsync();
+        return await _repository.GetQueryAsync().ToListAsync();
     }
 
     public async Task<IEnumerable<Driver>> GetAvailableAsync()
     {
-        return await _repository.GetQuery().Where(d => d.Status == DriverStatus.Доступен).ToListAsync();
+        return await _repository.GetQueryAsync().Where(d => d.Status == DriverStatus.Доступен).ToListAsync();
     }
 
     public async Task<Driver?> UpdateStatusAsync(long id, DriverStatus newStatus)

@@ -8,7 +8,7 @@ namespace LekuTrans.Data.Repositories
 {
     public interface IRepository<T> where T : class
     {
-        IQueryable<T> GetQuery();
+        IQueryable<T> GetQueryAsync();
         Task<T> GetByIdAsync(long id);
         Task CreateAsync(T item);
         void Update(T item);

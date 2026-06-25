@@ -17,7 +17,7 @@ namespace LekuTrans.Data.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public IQueryable<T> GetQuery()
+        public IQueryable<T> GetQueryAsync()
         {
             return _dbSet.AsQueryable();
         }

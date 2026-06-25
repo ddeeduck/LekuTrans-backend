@@ -35,7 +35,7 @@ public class VehicleService : IVehicleService
 
     public async Task<IEnumerable<Vehicle>> GetAllAsync()
     {
-        return await _repository.GetQuery().ToListAsync();
+        return await _repository.GetQueryAsync().ToListAsync();
     }
 
     public async Task<Vehicle?> GetByIdAsync(long id)
@@ -45,7 +45,7 @@ public class VehicleService : IVehicleService
 
     public async Task<IEnumerable<Vehicle>> GetAvailableAsync()
     {
-        return await _repository.GetQuery().Where(v => v.Status == VehicleStatus.Свободен).ToListAsync();
+        return await _repository.GetQueryAsync().Where(v => v.Status == VehicleStatus.Свободен).ToListAsync();
     }
 
     public async Task<Vehicle?> UpdateStatusAsync(long id, VehicleStatus newStatus)

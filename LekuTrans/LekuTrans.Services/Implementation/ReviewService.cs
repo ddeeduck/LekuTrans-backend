@@ -32,6 +32,6 @@ public class ReviewService : IReviewService
 
     public async Task<IEnumerable<Review>> GetByOrderAsync(long orderId)
     {
-        return await _repository.GetQuery().Where(r => r.OrderId == orderId).ToListAsync();
+        return await _repository.GetQueryAsync().Where(r => r.OrderId == orderId).ToListAsync();
     }
 }

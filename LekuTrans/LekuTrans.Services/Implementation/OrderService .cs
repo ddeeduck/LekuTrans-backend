@@ -52,7 +52,7 @@ public class OrderService : IOrderService
 
     public async Task<IEnumerable<Order>> GetAllAsync()
     {
-        return await _repository.GetQuery().ToListAsync();
+        return await _repository.GetQueryAsync().ToListAsync();
     }
 
     public async Task<Order?> GetByIdAsync(long id)
@@ -62,7 +62,7 @@ public class OrderService : IOrderService
 
     public async Task<IEnumerable<Order>> GetByClientAsync(long clientId)
     {
-        return await _repository.GetQuery().Where(o => o.ClientId == clientId).ToListAsync();
+        return await _repository.GetQueryAsync().Where(o => o.ClientId == clientId).ToListAsync();
     }
 
     public async Task<Order?> UpdateStatusAsync(long id, OrderStatus newStatus)

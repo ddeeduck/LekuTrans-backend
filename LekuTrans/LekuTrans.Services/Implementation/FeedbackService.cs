@@ -33,6 +33,6 @@ public class FeedbackService : IFeedbackService
 
     public async Task<IEnumerable<Feedback>> GetAllAsync()
     {
-        return await _repository.GetQuery().ToListAsync();
+        return await _repository.GetQueryAsync().ToListAsync();
     }
 }
