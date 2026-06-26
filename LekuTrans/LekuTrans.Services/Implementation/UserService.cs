@@ -5,7 +5,7 @@ using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LekuTrans.Services.Services;
+namespace LekuTrans.Services.Implementation;
 
 public class UserService : IUserService
 {

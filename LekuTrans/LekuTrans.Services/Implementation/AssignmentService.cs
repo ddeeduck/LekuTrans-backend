@@ -4,7 +4,7 @@ using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace LekuTrans.Services.Services;
+namespace LekuTrans.Services.Implementation;
 
 public class AssignmentService : IAssignmentService
 {
