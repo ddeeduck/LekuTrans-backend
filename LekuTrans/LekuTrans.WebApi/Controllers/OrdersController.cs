@@ -1,8 +1,9 @@
-﻿using LekuTrans.Data.Enums;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+
+namespace LekuTrans.WebApi.Controllers;
 
 [Authorize]
 [ApiController]
@@ -46,12 +47,13 @@ public class OrdersController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = order.Id }, order);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateStatusDto dto)
+    public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateOrderStatusDto dto)
     {
         try
         {
-            var order = await _orderService.UpdateStatusAsync(id, Enum.Parse<OrderStatus>(dto.Status));
+            var order = await _orderService.UpdateStatusAsync(id, dto.Status);
             return Ok(order);
         }
         catch (ArgumentNullException)

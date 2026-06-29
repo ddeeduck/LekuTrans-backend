@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
-using Microsoft.AspNetCore.Authorization;
 
-[Authorize]
+namespace LekuTrans.WebApi.Controllers;
+
+[Authorize(Roles = "Admin")]
 [ApiController]
 [Route("api/[controller]")]
 public class AssignmentsController : ControllerBase

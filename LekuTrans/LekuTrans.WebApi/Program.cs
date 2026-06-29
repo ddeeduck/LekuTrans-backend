@@ -6,6 +6,7 @@ using LekuTrans.Data;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Implementation;
+using LekuTrans.WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+builder.Services.AddScoped<JwtService>();
 
 var app = builder.Build();
 

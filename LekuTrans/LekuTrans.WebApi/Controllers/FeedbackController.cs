@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
-using Microsoft.AspNetCore.Authorization;
+
+namespace LekuTrans.WebApi.Controllers;
 
 [Authorize]
 [ApiController]

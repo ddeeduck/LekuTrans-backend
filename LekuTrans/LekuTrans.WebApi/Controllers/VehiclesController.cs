@@ -1,8 +1,9 @@
-﻿using LekuTrans.Data.Enums;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+
+namespace LekuTrans.WebApi.Controllers;
 
 [Authorize]
 [ApiController]
@@ -39,6 +40,7 @@ public class VehiclesController : ControllerBase
         return Ok(vehicles);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] VehicleDto dto)
     {
@@ -46,12 +48,13 @@ public class VehiclesController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = vehicle.Id }, vehicle);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateStatusDto dto)
+    public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateVehicleStatusDto dto)
     {
         try
         {
-            var vehicle = await _vehicleService.UpdateStatusAsync(id, Enum.Parse<VehicleStatus>(dto.Status));
+            var vehicle = await _vehicleService.UpdateStatusAsync(id, dto.Status);
             return Ok(vehicle);
         }
         catch (ArgumentNullException)
@@ -60,6 +63,7 @@ public class VehiclesController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(long id)
     {

@@ -1,8 +1,9 @@
-﻿using LekuTrans.Data.Enums;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+
+namespace LekuTrans.WebApi.Controllers;
 
 [Authorize]
 [ApiController]
@@ -30,19 +31,21 @@ public class DriversController : ControllerBase
         return Ok(drivers);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] DriverDto dto)
     {
         var driver = await _driverService.AddDriverAsync(dto);
-        return CreatedAtAction(nameof(GetAll), new { id = driver.Id }, driver);
+        return CreatedAtAction(nameof(GetAll), null, driver);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateStatusDto dto)
+    public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateDriverStatusDto dto)
     {
         try
         {
-            var driver = await _driverService.UpdateStatusAsync(id, Enum.Parse<DriverStatus>(dto.Status));
+            var driver = await _driverService.UpdateStatusAsync(id, dto.Status);
             return Ok(driver);
         }
         catch (ArgumentNullException)
@@ -51,6 +54,7 @@ public class DriversController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(long id)
     {
