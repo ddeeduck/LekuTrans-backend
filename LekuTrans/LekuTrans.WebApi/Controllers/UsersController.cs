@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LekuTrans.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
-namespace LekuTrans.WebApi.Controllers;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : ControllerBase

@@ -2,9 +2,9 @@
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
-namespace LekuTrans.WebApi.Controllers;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class DriversController : ControllerBase
