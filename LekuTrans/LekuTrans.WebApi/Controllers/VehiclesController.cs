@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LekuTrans.Data.Enums;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
-using LekuTrans.Data.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LekuTrans.WebApi.Controllers;
 
@@ -43,22 +43,34 @@ public class VehiclesController : ControllerBase
     public async Task<IActionResult> Add([FromBody] VehicleDto dto)
     {
         var vehicle = await _vehicleService.AddVehicleAsync(dto);
-        return Ok(vehicle);
+        return CreatedAtAction(nameof(GetById), new { id = vehicle.Id }, vehicle);
     }
 
     [HttpPut("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(long id, [FromBody] VehicleStatus newStatus)
+    public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateStatusDto dto)
     {
-        var vehicle = await _vehicleService.UpdateStatusAsync(id, newStatus);
-        if (vehicle == null)
+        try
+        {
+            var vehicle = await _vehicleService.UpdateStatusAsync(id, Enum.Parse<VehicleStatus>(dto.Status));
+            return Ok(vehicle);
+        }
+        catch (ArgumentNullException)
+        {
             return NotFound($"Машина с ID {id} не найдена.");
-        return Ok(vehicle);
+        }
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(long id)
     {
-        await _vehicleService.DeleteVehicleAsync(id);
-        return NoContent();
+        try
+        {
+            await _vehicleService.DeleteVehicleAsync(id);
+            return NoContent();
+        }
+        catch (ArgumentNullException)
+        {
+            return NotFound($"Машина с ID {id} не найдена.");
+        }
     }
 }

@@ -26,6 +26,6 @@ public class FeedbackController : ControllerBase
     public async Task<IActionResult> Add([FromBody] AddFeedbackDto dto)
     {
         var feedback = await _feedbackService.AddFeedbackAsync(dto.UserId, dto.Type, dto.Name, dto.Email, dto.Message);
-        return Ok(feedback);
+        return CreatedAtAction(nameof(GetAll), null, feedback);
     }
 }

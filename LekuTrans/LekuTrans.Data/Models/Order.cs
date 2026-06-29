@@ -18,14 +18,6 @@ public class Order
     [Column("client_cargo_id")]
     public long ClientCargoId { get; set; }
 
-    [Column("loading_info_id")]
-    [ForeignKey("LoadingInfo")]
-    public long? LoadingInfoId { get; set; }
-
-    [Column("recipient_id")]
-    [ForeignKey("Recipient")]
-    public long? RecipientId { get; set; }
-
     [Column("status")]
     public OrderStatus Status { get; set; } = OrderStatus.НоваяЗаявка;
 
@@ -62,12 +54,8 @@ public class Order
     [ForeignKey("ClientCargoId")]
     public ClientCargo ClientCargo { get; set; }
 
-    [ForeignKey("LoadingInfoId")]
     public LoadingInfo LoadingInfo { get; set; }
-
-    [ForeignKey("RecipientId")]
     public Recipient Recipient { get; set; }
-
     public ICollection<OrderStatusHistory> StatusHistory { get; set; }
     public ICollection<Assignment> Assignments { get; set; }
     public ICollection<Review> Reviews { get; set; }

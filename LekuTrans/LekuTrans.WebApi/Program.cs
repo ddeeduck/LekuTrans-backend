@@ -2,9 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using LekuTrans.Data;
 using LekuTrans.Data.Repositories;
 using LekuTrans.Services.Interfaces;
-using LekuTrans.Services.Services;
+using LekuTrans.Services.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRouting(x => x.LowercaseUrls = true);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

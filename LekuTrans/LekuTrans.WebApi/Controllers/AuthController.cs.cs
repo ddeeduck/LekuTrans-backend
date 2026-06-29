@@ -19,7 +19,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Register([FromBody] UserDto dto)
     {
         var user = await _userService.RegisterAsync(dto);
-        return Ok(new { user.Id, user.Email, user.Role, user.FullName });
+        return CreatedAtAction(nameof(UsersController.GetProfile), "Users", new { id = user.Id }, new { user.Id, user.Email, user.Role, user.FullName });
     }
 
     [HttpPost("login")]

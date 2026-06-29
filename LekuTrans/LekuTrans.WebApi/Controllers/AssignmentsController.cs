@@ -19,13 +19,20 @@ public class AssignmentsController : ControllerBase
     public async Task<IActionResult> AssignVehicle([FromBody] AssignVehicleDto dto)
     {
         var assignment = await _assignmentService.AssignVehicleAsync(dto.OrderId, dto.VehicleId, dto.DriverId);
-        return Ok(assignment);
+        return CreatedAtAction(null, new { id = assignment.Id }, assignment);
     }
 
     [HttpPut("{id}/complete")]
     public async Task<IActionResult> Complete(long id)
     {
-        await _assignmentService.CompleteAssignmentAsync(id);
-        return NoContent();
+        try
+        {
+            await _assignmentService.CompleteAssignmentAsync(id);
+            return NoContent();
+        }
+        catch (ArgumentNullException)
+        {
+            return NotFound($"Назначение с ID {id} не найдено.");
+        }
     }
 }

@@ -26,6 +26,6 @@ public class ReviewsController : ControllerBase
     public async Task<IActionResult> Add([FromBody] AddReviewDto dto)
     {
         var review = await _reviewService.AddReviewAsync(dto.OrderId, dto.ClientId, dto.Rating, dto.Comment);
-        return Ok(review);
+        return CreatedAtAction(nameof(GetByOrder), new { orderId = review.OrderId }, review);
     }
 }

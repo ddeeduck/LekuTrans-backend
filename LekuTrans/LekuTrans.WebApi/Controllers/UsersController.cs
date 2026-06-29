@@ -17,9 +17,16 @@ public class UsersController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProfile(long id)
     {
-        var user = await _userService.GetProfileAsync(id);
-        if (user == null)
+        try
+        {
+            var user = await _userService.GetProfileAsync(id);
+            if (user == null)
+                return NotFound($"Пользователь с ID {id} не найден.");
+            return Ok(new { user.Id, user.Email, user.Role, user.FullName });
+        }
+        catch (ArgumentNullException)
+        {
             return NotFound($"Пользователь с ID {id} не найден.");
-        return Ok(new { user.Id, user.Email, user.Role, user.FullName });
+        }
     }
 }

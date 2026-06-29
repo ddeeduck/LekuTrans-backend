@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LekuTrans.Data.Enums;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
-using LekuTrans.Data.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LekuTrans.WebApi.Controllers;
 
@@ -34,22 +34,34 @@ public class DriversController : ControllerBase
     public async Task<IActionResult> Add([FromBody] DriverDto dto)
     {
         var driver = await _driverService.AddDriverAsync(dto);
-        return Ok(driver);
+        return CreatedAtAction(nameof(GetAll), new { id = driver.Id }, driver);
     }
 
     [HttpPut("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(long id, [FromBody] DriverStatus newStatus)
+    public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateStatusDto dto)
     {
-        var driver = await _driverService.UpdateStatusAsync(id, newStatus);
-        if (driver == null)
+        try
+        {
+            var driver = await _driverService.UpdateStatusAsync(id, Enum.Parse<DriverStatus>(dto.Status));
+            return Ok(driver);
+        }
+        catch (ArgumentNullException)
+        {
             return NotFound($"Водитель с ID {id} не найден.");
-        return Ok(driver);
+        }
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(long id)
     {
-        await _driverService.DeleteDriverAsync(id);
-        return NoContent();
+        try
+        {
+            await _driverService.DeleteDriverAsync(id);
+            return NoContent();
+        }
+        catch (ArgumentNullException)
+        {
+            return NotFound($"Водитель с ID {id} не найден.");
+        }
     }
 }

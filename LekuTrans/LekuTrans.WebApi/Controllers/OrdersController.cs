@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LekuTrans.Data.Enums;
 using LekuTrans.Services.Interfaces;
 using LekuTrans.Services.Models;
-using LekuTrans.Data.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LekuTrans.WebApi.Controllers;
 
@@ -43,15 +43,20 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> Create([FromBody] OrderDto dto)
     {
         var order = await _orderService.CreateOrderAsync(dto);
-        return Ok(order);
+        return CreatedAtAction(nameof(GetById), new { id = order.Id }, order);
     }
 
     [HttpPut("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(long id, [FromBody] OrderStatus newStatus)
+    public async Task<IActionResult> UpdateStatus(long id, [FromBody] UpdateStatusDto dto)
     {
-        var order = await _orderService.UpdateStatusAsync(id, newStatus);
-        if (order == null)
+        try
+        {
+            var order = await _orderService.UpdateStatusAsync(id, Enum.Parse<OrderStatus>(dto.Status));
+            return Ok(order);
+        }
+        catch (ArgumentNullException)
+        {
             return NotFound($"Заказ с ID {id} не найден.");
-        return Ok(order);
+        }
     }
 }
