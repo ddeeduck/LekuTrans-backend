@@ -1,0 +1,32 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using LekuTrans.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+
+[Authorize]
+[ApiController]
+[Route("api/[controller]")]
+public class UsersController : ControllerBase
+{
+    private readonly IUserService _userService;
+
+    public UsersController(IUserService userService)
+    {
+        _userService = userService;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProfile(long id)
+    {
+        try
+        {
+            var user = await _userService.GetProfileAsync(id);
+            if (user == null)
+                return NotFound($"Пользователь с ID {id} не найден.");
+            return Ok(new { user.Id, user.Email, user.Role, user.FullName });
+        }
+        catch (ArgumentNullException)
+        {
+            return NotFound($"Пользователь с ID {id} не найден.");
+        }
+    }
+}
